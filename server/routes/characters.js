@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { requireAuth } from '../middleware/auth.js'
-import { validate } from '../middleware/Validate.js'
+import { validate } from '../middleware/validate.js'
 import { createCharacterSchema, updateCharacterSchema } from '../validators/characterValidator.js'
 import {
   getCharacters,
