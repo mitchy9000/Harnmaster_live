@@ -7,7 +7,7 @@ import AttributesTab from '../components/character/AttributesTab.jsx'
 import SkillsTab     from '../components/character/SkillsTab.jsx'
 import CombatTab     from '../components/character/CombatTab.jsx'
 import InventoryTab  from '../components/character/InventoryTab.jsx'
-import DiceRoller    from '../components/character/Diceroller.jsx'
+import DiceRoller    from '../components/character/DiceRoller.jsx'
 
 // ── Default blank character ───────────────────────────────────────────────────
 const BLANK = {
