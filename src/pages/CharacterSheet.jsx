@@ -2,12 +2,12 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { characterService } from '../services/characterService.js'
 import Navbar from '../components/common/Navbar.jsx'
-import IdentityTab   from '../components/character/IdentityTab.js'
-import AttributesTab from '../components/character/AttributesTab.js'
-import SkillsTab     from '../components/character/SkillsTab.js'
-import CombatTab     from '../components/character/CombatTab.js'
-import InventoryTab  from '../components/character/InventoryTab.js'
-import DiceRoller    from '../components/character/Diceroller.js'
+import IdentityTab   from '../components/character/IdentityTab.jsx'
+import AttributesTab from '../components/character/AttributesTab.jsx'
+import SkillsTab     from '../components/character/SkillsTab.jsx'
+import CombatTab     from '../components/character/CombatTab.jsx'
+import InventoryTab  from '../components/character/InventoryTab.jsx'
+import DiceRoller    from '../components/character/Diceroller.jsx'
 
 // ── Default blank character ───────────────────────────────────────────────────
 const BLANK = {
