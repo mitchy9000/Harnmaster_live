@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { characterService } from '../services/characterservice.js'
+import { characterService } from '../services/characterService.js'
 import Navbar from '../components/common/Navbar.jsx'
 import IdentityTab   from '../components/Character/IdentityTab.jsx'
 import AttributesTab from '../components/Character/AttributesTab.jsx'

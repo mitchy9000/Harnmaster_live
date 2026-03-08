@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
-import { characterService } from '../services/characterservice.js'
+import { characterService } from '../services/characterService.js'
 import Navbar from '../components/common/Navbar.jsx'
 
 function CharacterCard({ character, onDelete }) {
