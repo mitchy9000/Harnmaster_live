@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: harnmaster-app
+    env: node
+    region: virginia
+    plan: free
+
+    # Render injects PORT automatically — do NOT hardcode it here
+    buildCommand: npm install && npm run build
+    startCommand: node server/index.js
+
+    # Render will run the healthcheck before marking deployment live
+    healthCheckPath: /health
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      # MONGO_URI — paste your MongoDB Atlas connection string in the Render dashboard
+      - key: MONGO_URI
+        sync: false
+
+      # JWT_SECRET — Render generates a secure random value automatically
+      - key: JWT_SECRET
+        generateValue: true
+
+      - key: JWT_EXPIRES_IN
+        value: 7d
+
+      # CLIENT_ORIGIN — set to your Render app URL after first deploy
+      # e.g. https://harnmaster-app.onrender.com
+      - key: CLIENT_ORIGIN
+        sync: false
