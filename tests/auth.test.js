@@ -1,22 +1,19 @@
 import { jest, describe, it, expect, beforeAll, afterAll, beforeEach } from '@jest/globals'
 import mongoose from 'mongoose'
-import { MongoMemoryServer } from 'mongodb-memory-server'
 import request from 'supertest'
 import { app } from '../server/index.js'
 
-// MongoMemoryServer downloads a binary on first run — allow plenty of time
-jest.setTimeout(120_000)
-
-let mongod
+jest.setTimeout(30_000)
 
 beforeAll(async () => {
-  mongod = await MongoMemoryServer.create({ instance: { startupTimeout: 120_000 } })
-  await mongoose.connect(mongod.getUri())
+  const uri = process.env.MONGO_URI_TEST || process.env.MONGO_URI
+  if (!uri) throw new Error('No MongoDB URI set — add MONGO_URI_TEST to .env')
+  await mongoose.connect(uri)
 })
 
 afterAll(async () => {
+  await mongoose.connection.dropDatabase()
   await mongoose.disconnect()
-  await mongod.stop()
 })
 
 beforeEach(async () => {
@@ -58,7 +55,9 @@ describe('POST /api/auth/register', () => {
   })
 
   it('returns 409 when email is already taken', async () => {
+    // Small pause so Atlas indexes the first insert before the duplicate check
     await registerUser()
+    await new Promise(r => setTimeout(r, 500)) // let Atlas index the insert
     const res = await registerUser({ username: 'otheruser' })
     expect(res.status).toBe(409)
     expect(res.body.error).toMatch(/email/i)
@@ -66,6 +65,7 @@ describe('POST /api/auth/register', () => {
 
   it('returns 409 when username is already taken', async () => {
     await registerUser()
+    await new Promise(r => setTimeout(r, 500))
     const res = await registerUser({ email: 'other@example.com' })
     expect(res.status).toBe(409)
     expect(res.body.error).toMatch(/username/i)
@@ -91,9 +91,7 @@ describe('POST /api/auth/register', () => {
 // ── Login ─────────────────────────────────────────────────────────────────────
 
 describe('POST /api/auth/login', () => {
-  beforeEach(async () => {
-    await registerUser()
-  })
+  beforeEach(async () => { await registerUser() })
 
   it('logs in with correct credentials and returns 200', async () => {
     const res = await request(app)

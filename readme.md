@@ -110,7 +110,7 @@ Uses `mongodb-memory-server` — no external DB needed.
 3. Whitelist `0.0.0.0/0` under **Network Access** (Render IPs are dynamic)
 4. Copy the connection string — looks like:
    ```
-   mongodb+srv://user:password@cluster.mongodb.net/harnmaster?retryWrites=true&w=majority
+   
    ```
 
 ### Step 2 — Push to GitHub

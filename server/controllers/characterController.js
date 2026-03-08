@@ -108,7 +108,7 @@ export async function updateCharacter(req, res, next) {
     const character = await Character.findByIdAndUpdate(
       id,
       { $set: safeBody },
-      { new: true, runValidators: true }
+      { returnDocument: 'after', runValidators: true }
     )
 
     return res.status(200).json({ character })

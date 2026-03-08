@@ -1,21 +1,19 @@
 import { jest, describe, it, expect, beforeAll, afterAll, beforeEach } from '@jest/globals'
 import mongoose from 'mongoose'
-import { MongoMemoryServer } from 'mongodb-memory-server'
 import request from 'supertest'
 import { app } from '../server/index.js'
 
-jest.setTimeout(120_000)
-
-let mongod
+jest.setTimeout(30_000)
 
 beforeAll(async () => {
-  mongod = await MongoMemoryServer.create({ instance: { startupTimeout: 120_000 } })
-  await mongoose.connect(mongod.getUri())
+  const uri = process.env.MONGO_URI_TEST || process.env.MONGO_URI
+  if (!uri) throw new Error('No MongoDB URI set — add MONGO_URI_TEST to .env')
+  await mongoose.connect(uri)
 })
 
 afterAll(async () => {
+  await mongoose.connection.dropDatabase()
   await mongoose.disconnect()
-  await mongod.stop()
 })
 
 beforeEach(async () => {
@@ -225,8 +223,7 @@ describe('PUT /api/characters/:id', () => {
       .post('/api/characters').set('Cookie', cookieA).send(baseCharacter)
     const id = createRes.body.character._id
     const res = await request(app)
-      .put(`/api/characters/${id}`).set('Cookie', cookieB)
-      .send({ name: 'Hacked' })
+      .put(`/api/characters/${id}`).set('Cookie', cookieB).send({ name: 'Hacked' })
     expect(res.status).toBe(404)
   })
 
