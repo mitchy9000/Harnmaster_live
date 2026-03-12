@@ -4,6 +4,19 @@ A full-stack character management app for **HârnMaster 3rd Edition** — attrib
 allocation, skill tracking with dice rolls, combat, injuries, and inventory, all
 in one place.
 
+**Live app:** https://harnmaster-app.onrender.com
+
+---
+
+## Documentation
+
+| Document | Description |
+|---|---|
+| [Initial Project Ideas](docs/initial-project-ideas.md) | Early brainstorming: ideas considered, technology decisions |
+| [Project Proposal](docs/project-proposal.md) | Problem statement, scope, architecture, timeline |
+| [Frontend Control Flow](docs/frontend-control-flow.md) | Route map, page-level flows, component interactions |
+| [Data Model](docs/data-model.md) | MongoDB schemas, field reference, ER summary |
+
 ---
 
 ## Stack
@@ -185,6 +198,23 @@ The core mechanic is a percentile roll against a Mastery Level (ML):
 | CF     | roll ≥ 96              |
 
 See `src/utils/harnmasterDice.js` for the full implementation.
+
+---
+
+## External Services and APIs
+
+This project does not call any third-party data APIs, XML feeds, or JSON APIs
+at runtime. All data is stored in and retrieved from the project's own MongoDB
+database. The external services used are infrastructure only:
+
+| Service | Role | URL |
+|---|---|---|
+| MongoDB Atlas | Cloud-hosted MongoDB database | https://www.mongodb.com/atlas |
+| Render.com | Hosting / continuous deployment | https://render.com |
+| Google Fonts | CSS font stylesheet loaded by the browser | https://fonts.googleapis.com |
+
+The internal REST API returns and accepts JSON. All endpoints are documented in
+[docs/project-proposal.md](docs/project-proposal.md#5-api-overview).
 
 ---
 
